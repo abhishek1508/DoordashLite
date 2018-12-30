@@ -34,6 +34,7 @@ captures/
 
 # IntelliJ
 *.iml
+.idea/*
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
@@ -72,3 +73,21 @@ fastlane/readme.md
 .Trashes
 ehthumbs.db
 Thumbs.db
+.idea/codeStyles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/runConfigurations.xml
+.idea/vcs.xml
+app/.gitignore
+app/build.gradle
+app/libs/
+app/proguard-rules.pro
+app/src/
+build.gradle
+config/
+dependencies/
+gradle.properties
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
