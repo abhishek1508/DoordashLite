@@ -45,21 +45,16 @@ class ApiModule {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
-    @Provides
-    @Singleton
-    fun provideHttpCache(context: Application): Cache? {
-        val cacheSize: Long = MEGABYTES * BYTES * BYTES //50 MiB cache size
-        return Cache(context.cacheDir, cacheSize)
-    }
-
     @Singleton
     @Provides
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor,
-                            cache: Cache?): OkHttpClient {
+    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val client = OkHttpClient.Builder()
-        return client.addInterceptor(loggingInterceptor).cache(cache).connectTimeout(60,
-                                                                                     TimeUnit.SECONDS).readTimeout(
-                        60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS).build()
+        return client
+                .addInterceptor(loggingInterceptor)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build()
     }
 
     @Provides
