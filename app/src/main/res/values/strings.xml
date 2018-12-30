@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">DoordashLiteApp</string>
+    <string name="discover">Discover</string>
+    <string name="restaurant_fragment_tag">RestaurantFragmentTag</string>
+    <string name="restaurant_detail_fragment_tag">RestaurantDetailFragmentTag</string>
+</resources>

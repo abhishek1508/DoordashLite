@@ -1,0 +1,63 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply from: '../config/detekt/detekt.gradle'
+
+apply from: '../config/codecoverage/jacoco.gradle'
+
+apply from: '../dependencies/dependencies.gradle'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.app.doordashlite"
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        buildConfigField 'String', 'HOST', '"https://api.doordash.com/"'
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+        debugProguard {
+            initWith debug
+            minifyEnabled true
+            shrinkResources true
+            matchingFallbacks = ['debug']
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    signingConfigs {
+        debug {
+
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    androidExtensions {
+        experimental = true
+    }
+}
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    appDependencies.each {
+        add(it.configuration, it.dependency)
+    }
+}

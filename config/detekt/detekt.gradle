@@ -1,0 +1,13 @@
+detekt {
+    version = "1.0.0.RC8"
+
+    profile("main") {
+        input = "$projectDir"
+        config = "$project.rootDir/config/detekt/default-detekt-config.yml"
+        output = "$project.rootDir/app/build/reports/detekt.xml"
+        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+        baseline = "$project.rootDir/app/build/reports/baseline.xml"
+        parallel = true
+        disableDefaultRuleSets = false
+    }
+}
