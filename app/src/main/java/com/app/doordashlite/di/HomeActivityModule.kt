@@ -7,6 +7,6 @@ import com.app.doordashlite.HomeActivity
 @Module
 abstract class HomeActivityModule {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun contributeHomeActivity(): HomeActivity
 }
