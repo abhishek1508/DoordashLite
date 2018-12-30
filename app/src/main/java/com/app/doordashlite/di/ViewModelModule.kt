@@ -8,6 +8,7 @@ import dagger.Module
 import com.app.doordashlite.factory.ViewModelFactory
 import com.app.doordashlite.HomeViewModel
 import com.app.doordashlite.restaurants.RestaurantViewModel
+import com.app.doordashlite.restaurants.detail.RestaurantDetailViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -21,6 +22,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(RestaurantViewModel::class)
     abstract fun bindRestaurantViewModel(viewModel: RestaurantViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RestaurantDetailViewModel::class)
+    abstract fun bindRestaurantDetailViewModel(viewModel: RestaurantDetailViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(
