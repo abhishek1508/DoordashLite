@@ -18,5 +18,7 @@ data class Restaurant(
         val coverImgUrl: String?,
         @field:SerializedName("status")
         val status: String?,
+        @field:SerializedName("status_type")
+        val statusType: String?,
         @field:SerializedName("delivery_fee")
         val deliveryFee: Double?): Parcelable
