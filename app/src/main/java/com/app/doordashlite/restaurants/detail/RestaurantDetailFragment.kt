@@ -9,12 +9,26 @@ import android.view.View
 import android.view.ViewGroup
 import com.app.doordashlite.R
 import com.app.doordashlite.di.Injectable
+import com.app.doordashlite.restaurants.RestaurantFragment
+import com.app.doordashlite.restaurants.repo.entity.Restaurant
 import javax.inject.Inject
 
 class RestaurantDetailFragment : Fragment(), Injectable {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: RestaurantDetailViewModel
+
+    companion object{
+        private val ARG_RESTAURANT = "myFragment_caught"
+
+        fun newInstance(restaurant: Restaurant): RestaurantFragment {
+            val args = Bundle()
+            args.putParcelable(ARG_RESTAURANT, restaurant)
+            val fragment = RestaurantFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

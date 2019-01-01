@@ -35,7 +35,7 @@ class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this)
         initUI()
         initData()
     }
@@ -52,11 +52,11 @@ class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     private fun initData() {
-        this.replaceFragmentSafely(RestaurantFragment(), getString(R.string.restaurant_fragment_tag), R.id.content)
+        this.replaceFragmentSafely(RestaurantFragment.newInstance(), getString(R.string.restaurant_fragment_tag), R.id.content)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onReceiveEvent(event: RestaurantEvent) {
-        this.replaceFragmentSafely(RestaurantDetailFragment(), getString(R.string.restaurant_detail_fragment_tag), R.id.content)
+        this.replaceFragmentSafely(RestaurantDetailFragment.newInstance(event.restaurant), getString(R.string.restaurant_detail_fragment_tag), R.id.content)
     }
 }
