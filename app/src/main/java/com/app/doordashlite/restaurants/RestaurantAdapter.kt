@@ -18,13 +18,17 @@ class RestaurantAdapter(private val context: Context) :
     private var itemList: MutableList<Restaurant> = mutableListOf()
     private lateinit var callback: OnItemClickListener
 
+    /**
+     * Adds a collection of all restaurants at the same time to the list
+     */
     fun addAll(items: MutableList<Restaurant>) {
-        itemList.clear()
-        notifyItemRangeRemoved(0, items.size - 1)
         itemList.addAll(items)
         notifyItemRangeInserted(0, items.size - 1)
     }
 
+    /**
+     * Adds only one restaurant at a time to the list
+     */
     fun add(item: Restaurant) {
         itemList.add(item)
         notifyItemInserted(itemList.size - 1)

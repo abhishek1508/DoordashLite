@@ -11,8 +11,11 @@ class ServiceGeneratorFactory @Inject constructor(val retrofitBuilder: Retrofit.
 
     @Inject lateinit var sharedPref: SharedPreferences
 
+    /**
+     * The method adds the login interceptor and returns an implementation of the API endpoints
+     * defined by the service interface
+     */
     fun <S> createLoginService(serviceClass: Class<S>, loginDetails: String): S {
-        // Needed if the app requires Login.
         /*if (loginDetails.isNotEmpty()) {
             val interceptor = LoginInterceptor(loginDetails)
             if (!okHttpClient.interceptors().contains(interceptor)) {
@@ -22,8 +25,11 @@ class ServiceGeneratorFactory @Inject constructor(val retrofitBuilder: Retrofit.
         return retrofitBuilder.build().create(serviceClass)
     }
 
+    /**
+     * The method adds the auth interceptor and returns an implementation of the API endpoints
+     * defined by the service interface
+     */
     fun <S> createService(serviceClass: Class<S>): S {
-        // Needed if the API needs authentication
         /*val authToken: String = sharedPref.getString(AUTH_TOKEN, "")
         val refreshToken: String = sharedPref.getString(REFRESH_TOKEN, "")
         if (authToken.isNotEmpty()) {

@@ -47,7 +47,7 @@ class RestaurantServiceTest {
     @Test
     fun testRestaurantReturnListOfRestaurants() {
         val observer = TestObserver<Result<List<Restaurant>>>()
-        val path = "/v2/restaurant?lat=37.42274&lng=-122.139956&offset=0&limit=1"
+        val path = "/v2/restaurant/?lat=37.42274&lng=-122.139956&offset=0&limit=1"
         val mockResponse = MockResponse()
                 .setResponseCode(200)
                 .setBody(getJson("api-response/restaurant.json"))
