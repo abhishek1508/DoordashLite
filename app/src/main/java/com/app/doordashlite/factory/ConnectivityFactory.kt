@@ -6,7 +6,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkInfo
+import android.support.annotation.VisibleForTesting
 
+@VisibleForTesting
 class ConnectivityFactory constructor(private val connectivityManager: ConnectivityManager):
         LiveData<Boolean>() {
 

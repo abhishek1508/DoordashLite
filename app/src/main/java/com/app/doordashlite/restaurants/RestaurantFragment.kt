@@ -47,12 +47,10 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(RestaurantViewModel::class.java)
         initUI()
-        Log.d("Test", "called from onActivityCreated")
         observe()
     }
 
     fun reloadData() {
-        Log.d("Test", "called from reload")
         adapter.clear()
         observe()
     }
