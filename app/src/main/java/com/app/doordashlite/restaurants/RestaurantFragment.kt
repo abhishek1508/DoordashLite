@@ -33,6 +33,7 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
         }
     }
 
+    // Fragment lifecycle methods //////////////////////////////////////////////////////////////////
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.layout_restaurant, container, false)
@@ -45,6 +46,7 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
         observe()
     }
 
+    // Private methods /////////////////////////////////////////////////////////////////////////////
     private fun initUI() {
         adapter = RestaurantAdapter(context!!)
         adapter.setCallback(this)
@@ -64,10 +66,18 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
                 .observe(this, Observer<List<Restaurant>> {
                     progress.visibility = View.GONE
                     adapter.addAll(it?.toMutableList()!!)
+                    restaurantRecycler.scrollToPosition(viewModel.getFirstVisibleItemPosition())
                 })
     }
 
+    private fun saveFirstVisibleItemPosition() {
+        val layoutManager = restaurantRecycler.layoutManager as LinearLayoutManager
+        viewModel.setFirstVisibleItemPosition(layoutManager.findFirstVisibleItemPosition())
+    }
+
+    // RestaurantAdapter.OnItemClickListener methods ///////////////////////////////////////////////
     override fun onRestaurantClicked(restaurant: Restaurant) {
+        saveFirstVisibleItemPosition()
         EventBus.getDefault().post(RestaurantEvent(restaurant))
     }
 }

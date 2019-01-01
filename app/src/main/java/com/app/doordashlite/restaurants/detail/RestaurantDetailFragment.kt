@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.app.doordashlite.R
 import com.app.doordashlite.di.Injectable
-import com.app.doordashlite.restaurants.RestaurantFragment
 import com.app.doordashlite.restaurants.repo.entity.Restaurant
 import javax.inject.Inject
 
@@ -21,10 +20,10 @@ class RestaurantDetailFragment : Fragment(), Injectable {
     companion object{
         private val ARG_RESTAURANT = "myFragment_caught"
 
-        fun newInstance(restaurant: Restaurant): RestaurantFragment {
+        fun newInstance(restaurant: Restaurant): RestaurantDetailFragment {
             val args = Bundle()
             args.putParcelable(ARG_RESTAURANT, restaurant)
-            val fragment = RestaurantFragment()
+            val fragment = RestaurantDetailFragment()
             fragment.arguments = args
             return fragment
         }

@@ -21,16 +21,14 @@ import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: HomeViewModel
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
 
+    // Activity lifecycle methods //////////////////////////////////////////////////////////////////
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -45,6 +43,7 @@ class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onDestroy()
     }
 
+    // Private methods /////////////////////////////////////////////////////////////////////////////
     private fun initUI() {
         app_bar.setTitleTextColor(Color.WHITE)
         setSupportActionBar(app_bar)
@@ -55,6 +54,11 @@ class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector {
         this.replaceFragmentSafely(RestaurantFragment.newInstance(), getString(R.string.restaurant_fragment_tag), R.id.content)
     }
 
+    // Event Bus methods ///////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Received events when clicked on an item in the recycler view.
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onReceiveEvent(event: RestaurantEvent) {
         this.replaceFragmentSafely(RestaurantDetailFragment.newInstance(event.restaurant), getString(R.string.restaurant_detail_fragment_tag), R.id.content)

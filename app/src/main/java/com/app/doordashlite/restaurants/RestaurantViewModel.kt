@@ -15,6 +15,7 @@ const val LIMIT = 50
 class RestaurantViewModel @Inject constructor() : ViewModel() {
     @Inject lateinit var restaurantRepo: RestaurantRepository
     private val latlng = LatLng(DOORDASH_HQ_LAT, DOORDASH_HQ_LNG)
+    private var firstVisibleItemPosition = 0;
 
     fun getRestaurants(lat: Double, lng: Double, offset: Int, limit: Int): LiveData<List<Restaurant>> {
         return restaurantRepo.getRestaurants(lat, lng, offset, limit, latlng)
@@ -34,5 +35,13 @@ class RestaurantViewModel @Inject constructor() : ViewModel() {
 
     fun getLimit(): Int {
         return LIMIT
+    }
+
+    fun setFirstVisibleItemPosition(pos: Int) {
+        this.firstVisibleItemPosition = pos
+    }
+
+    fun getFirstVisibleItemPosition(): Int {
+        return firstVisibleItemPosition
     }
 }
