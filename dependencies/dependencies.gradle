@@ -29,12 +29,17 @@ ext {
     // Okhttp3 Version
     okhttp3Version = '3.11.0'
     loggingInterceptorVersion = '3.6.0'
+    mockwebserverVersion = '3.12.0'
+    okioVersion = '2.1.0'
 
     // Dagger Version
     daggerVersion = '2.17'
 
     // Glide Version
     glideVersion = '4.7.1'
+
+    // Mockito core
+    mockitoCoreVersion = '2.8.9'
 
     def androidLibs = [
             design  : [group: 'com.android.support', name: 'design', version: supportLibraryVersion],
@@ -63,16 +68,19 @@ ext {
             scalarConverter  : [group: 'com.squareup.retrofit2', name: 'converter-scalars', version: scalarConverterVersion],
             okhttp3  : [group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttp3Version],
             okhttpLoggingInterceptor  : [group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: loggingInterceptorVersion],
+            mockwebserver  : [group: 'com.squareup.okhttp3', name: 'mockwebserver', version: mockwebserverVersion],
+            okio  : [group: 'com.squareup.okio', name: 'okio', version: okioVersion],
             dagger  : [group: 'com.google.dagger', name: 'dagger', version: daggerVersion],
             daggerCompiler  : [group: 'com.google.dagger', name: 'dagger-compiler', version: daggerVersion],
             daggerAndroidSupport  : [group: 'com.google.dagger', name: 'dagger-android-support', version: daggerVersion],
             daggerAndroidProcessor  : [group: 'com.google.dagger', name: 'dagger-android-processor', version: daggerVersion],
             glide  : [group: 'com.github.bumptech.glide', name: 'glide', version: glideVersion],
-            glideCompiler  : [group: 'com.github.bumptech.glide', name: 'compiler', version: glideVersion],
+            glideCompiler  : [group: 'com.github.bumptech.glide', name: 'compiler', version: glideVersion]
     ]
 
     def testLibs = [
             junit  : [group: 'junit', name: 'junit', version: junitVersion],
+            mockitoCore  : [group: 'org.mockito', name: 'mockito-core', version: mockitoCoreVersion],
             runner  : [group: 'com.android.support.test', name: 'runner', version: runnerVersion],
             espresso  : [group: 'com.android.support.test.espresso', name: 'espresso-core', version: espressoVersion],
             lifeCycleTest: [group: 'android.arch.core', name: 'core-testing', version: lifeCycleVersion],
@@ -91,6 +99,7 @@ ext {
 
             // Test Lib dependencies
             [configuration: "implementation", dependency: testLibs.junit],
+            [configuration: "testImplementation", dependency: testLibs.mockitoCore],
             [configuration: "implementation", dependency: testLibs.runner],
             [configuration: "implementation", dependency: testLibs.espresso],
             [configuration: "testImplementation", dependency: testLibs.lifeCycleTest],
@@ -110,6 +119,8 @@ ext {
 
             [configuration: "implementation", dependency: libs.okhttp3],
             [configuration: "implementation", dependency: libs.okhttpLoggingInterceptor],
+            [configuration: "testImplementation", dependency: libs.mockwebserver],
+            [configuration: "testImplementation", dependency: libs.okio],
 
             [configuration: "implementation", dependency: libs.dagger],
             [configuration: "kapt", dependency: libs.daggerCompiler],

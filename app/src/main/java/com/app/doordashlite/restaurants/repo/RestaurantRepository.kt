@@ -8,15 +8,15 @@ import com.app.doordashlite.restaurants.api.RestaurantService
 import com.app.doordashlite.restaurants.repo.cache.RestaurantCache
 import com.app.doordashlite.restaurants.repo.entity.Restaurant
 import com.app.doordashlite.restaurants.repo.entity.local.LatLng
-import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
-class RestaurantRepository @Inject constructor(private val factory: ServiceGeneratorFactory,
-                                               @Named("IO") private val backgroundThread: Scheduler,
-                                               @Named("MAIN") private val mainThread: Scheduler) {
+class RestaurantRepository @Inject constructor() {
+
+    @Inject lateinit var factory: ServiceGeneratorFactory
 
     fun getRestaurants(lat: Double, lng: Double, offset: Int, limit: Int, latLng: LatLng):
             LiveData<List<Restaurant>> {
@@ -30,8 +30,8 @@ class RestaurantRepository @Inject constructor(private val factory: ServiceGener
         val restaurantApi =
                 factory.createService(RestaurantService::class.java).getRestaurants(lat, lng, offset, limit)
         restaurantApi
-                .subscribeOn(backgroundThread)
-                .observeOn(mainThread)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     if (it?.isError!!) {
                         Log.d("Testing", "${it.error()}")

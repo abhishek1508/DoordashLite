@@ -1,8 +1,7 @@
 package com.app.doordashlite.restaurants
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.ViewModel
 import com.app.doordashlite.restaurants.repo.RestaurantRepository
 import com.app.doordashlite.restaurants.repo.entity.Restaurant
 import com.app.doordashlite.restaurants.repo.entity.local.LatLng
@@ -12,7 +11,8 @@ const val DOORDASH_HQ_LAT = 37.422740
 const val DOORDASH_HQ_LNG = -122.139956
 const val OFFSET = 0
 const val LIMIT = 50
-class RestaurantViewModel @Inject constructor(val app: Application) : AndroidViewModel(app) {
+
+class RestaurantViewModel @Inject constructor() : ViewModel() {
     @Inject lateinit var restaurantRepo: RestaurantRepository
     private val latlng = LatLng(DOORDASH_HQ_LAT, DOORDASH_HQ_LNG)
 
