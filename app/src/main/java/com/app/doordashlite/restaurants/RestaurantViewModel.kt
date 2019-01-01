@@ -10,7 +10,7 @@ import javax.inject.Inject
 const val DOORDASH_HQ_LAT = 37.422740
 const val DOORDASH_HQ_LNG = -122.139956
 const val OFFSET = 0
-const val LIMIT = 50
+const val LIMIT = 5
 
 class RestaurantViewModel @Inject constructor() : ViewModel() {
     @Inject lateinit var restaurantRepo: RestaurantRepository

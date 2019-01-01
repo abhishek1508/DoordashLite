@@ -3,4 +3,7 @@
     <string name="discover">Discover</string>
     <string name="restaurant_fragment_tag">RestaurantFragmentTag</string>
     <string name="restaurant_detail_fragment_tag">RestaurantDetailFragmentTag</string>
+    <string name="no_network_title">Something went wrong</string>
+    <string name="no_network_subtitle">You may want to check your network connection</string>
+    <string name="retry">Try Again</string>
 </resources>

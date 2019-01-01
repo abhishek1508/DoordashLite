@@ -3,15 +3,19 @@ package com.app.doordashlite.restaurants
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.doordashlite.R
 import com.app.doordashlite.di.Injectable
+import com.app.doordashlite.factory.ConnectivityFactory
 import com.app.doordashlite.restaurants.repo.entity.Restaurant
 import com.app.doordashlite.restaurants.repo.entity.local.RestaurantEvent
 import kotlinx.android.synthetic.main.layout_restaurant.*
@@ -43,6 +47,13 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(RestaurantViewModel::class.java)
         initUI()
+        Log.d("Test", "called from onActivityCreated")
+        observe()
+    }
+
+    fun reloadData() {
+        Log.d("Test", "called from reload")
+        adapter.clear()
         observe()
     }
 

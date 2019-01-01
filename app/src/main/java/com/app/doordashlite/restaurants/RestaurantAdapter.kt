@@ -34,6 +34,11 @@ class RestaurantAdapter(private val context: Context) :
         notifyItemInserted(itemList.size - 1)
     }
 
+    fun clear() {
+        itemList.clear()
+        notifyDataSetChanged()
+    }
+
     fun setCallback(callback: OnItemClickListener) {
         this.callback = callback
     }
