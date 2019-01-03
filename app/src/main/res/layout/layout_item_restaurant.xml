@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/restaurantImage"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/item_restaurant_image_width"
+        android:layout_height="@dimen/item_restaurant_image_height"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
