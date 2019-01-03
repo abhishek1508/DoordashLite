@@ -7,6 +7,7 @@ import com.app.doordashlite.factory.ServiceGeneratorFactory
 import com.app.doordashlite.restaurants.api.RestaurantService
 import com.app.doordashlite.restaurants.repo.cache.RestaurantCache
 import com.app.doordashlite.restaurants.repo.entity.Restaurant
+import com.app.doordashlite.restaurants.repo.entity.RestaurantDetail
 import com.app.doordashlite.restaurants.repo.entity.local.LatLng
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -38,6 +39,23 @@ class RestaurantRepository @Inject constructor() {
                     } else {
                         data.postValue(it.response()?.body()!!)
                         RestaurantCache.getInstance().put(latLng, it.response()?.body()!!)
+                    }
+                }
+        return data
+    }
+
+    fun getRestaurantDetail(id: Long): LiveData<RestaurantDetail> {
+        val data: MutableLiveData<RestaurantDetail> = MutableLiveData()
+        val restaurantDetailApi =
+                factory.createService(RestaurantService::class.java).getRestaurantDetail(id)
+        restaurantDetailApi
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it?.isError!!) {
+                        Log.d("Testing", "${it.error()}")
+                    } else {
+                        data.postValue(it.response()?.body()!!)
                     }
                 }
         return data

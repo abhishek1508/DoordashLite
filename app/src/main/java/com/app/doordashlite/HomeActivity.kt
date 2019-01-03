@@ -7,7 +7,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.app.doordashlite.extensions.android.support.v7.app.findFragmentByTag
