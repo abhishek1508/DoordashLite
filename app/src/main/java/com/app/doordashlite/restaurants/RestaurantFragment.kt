@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -17,6 +18,7 @@ import com.app.doordashlite.R
 import com.app.doordashlite.di.Injectable
 import com.app.doordashlite.factory.ConnectivityFactory
 import com.app.doordashlite.restaurants.repo.entity.Restaurant
+import com.app.doordashlite.restaurants.repo.entity.local.CustomItem
 import com.app.doordashlite.restaurants.repo.entity.local.RestaurantEvent
 import kotlinx.android.synthetic.main.layout_restaurant.*
 import org.greenrobot.eventbus.EventBus
@@ -30,6 +32,7 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
     private lateinit var viewModel: RestaurantViewModel
     private lateinit var adapter: RestaurantAdapter
     private lateinit var manager: LinearLayoutManager
+    private lateinit var  preferences: SharedPreferences
 
     companion object{
         fun newInstance(): RestaurantFragment {
@@ -46,6 +49,7 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(RestaurantViewModel::class.java)
+        preferences = activity!!.getSharedPreferences("RESTAURANTS", Context.MODE_PRIVATE)
         initUI()
         observe()
     }
@@ -57,7 +61,7 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
 
     // Private methods /////////////////////////////////////////////////////////////////////////////
     private fun initUI() {
-        adapter = RestaurantAdapter(context!!)
+        adapter = RestaurantAdapter(context!!, preferences)
         adapter.setCallback(this)
         manager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         restaurantRecycler.layoutManager = manager
@@ -74,7 +78,15 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
                                  viewModel.getLimit())
                 .observe(this, Observer<List<Restaurant>> {
                     progress.visibility = View.GONE
-                    adapter.addAll(it?.toMutableList()!!)
+                    val restaurantList = it
+                    val customList = mutableListOf<CustomItem>()
+                    val customItem = CustomItem(null, "Welcome Message")
+                    customList.add(customItem)
+                    for (item in restaurantList!!) {
+                        val custom = CustomItem(item, "")
+                        customList.add(custom)
+                    }
+                    adapter.addAll(customList)
                     restaurantRecycler.scrollToPosition(viewModel.getFirstVisibleItemPosition())
                 })
     }
@@ -88,5 +100,12 @@ class RestaurantFragment : Fragment(), Injectable, RestaurantAdapter.OnItemClick
     override fun onRestaurantClicked(restaurant: Restaurant) {
         saveFirstVisibleItemPosition()
         EventBus.getDefault().post(RestaurantEvent(restaurant))
+    }
+
+    override fun onWelcomeMsgDismissClicked() {
+
+        preferences.edit().putBoolean("IS_DISMISS_CLICKED", true).apply()
+        preferences.edit().putBoolean("IS_FIRST_TIME_CLICKED", true).apply()
+        adapter.remove()
     }
 }
